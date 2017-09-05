@@ -13,6 +13,6 @@ def test_view(request):
             post.save()
     form = PostForm()	
     records = Record.objects.all()
-    return render(request, 'timer/test.html', {'records': records, 'form': form, })
+    return render(request, 'timer/stop_watch.html', {'records': records, 'form': form, })
 
 

@@ -34,6 +34,11 @@
     .btn.inactive {
         opacity: 0.5;
     }
+    table{
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
   </style>
     </head>
     <body>
@@ -41,6 +46,20 @@
         <div id="start" class="btn active">START</div>
         <div id="stop" class="btn inactive">STOP</div>
         <div id="reset" class="btn active">RESET</div>
+        <div id="save" class="btn inactive">SAVE</div>
+        <form method="POST" class="post-form" id="time-form">{% csrf_token %}
+            {{ form.as_p }}
+        </form>
+
+        <table>
+        <tr><td>日付</td><td>時間</td></tr>
+        {% for record in records %}
+        <tr>
+        <td> {{ record.date  }} </td>
+        <td> {{ record.time  }} </td>
+        </tr>
+        {% endfor %}
+        </table>
     <script>
     (function() {
         'use strict';
@@ -53,6 +72,7 @@
         var startButton = document.getElementById('start');
         var stopButton = document.getElementById('stop');
         var resetButton = document.getElementById('reset');
+        var saveButton = document.getElementById('save');
         var timerText = document.getElementById('timerText');
 
 //関数の定義////////////////////////////////////////////////
@@ -60,6 +80,7 @@
             startButton.className = start ? 'btn active' : 'btn inactive';
             stopButton.className = stop ? 'btn active' : 'btn inactive';
             resetButton.className = reset ? 'btn active' : 'btn inactive';
+            saveButton.className = reset ? 'btn active' : 'btn inactive';
         }
 
         function start_func(){
@@ -101,6 +122,13 @@
             elapsedTime = 0;
             setButtonState(true, false, false);
         });
+
+        saveButton.addEventListener('click', function() {
+            if(isRunning || elapsedTime==0) return;
+            var form = document.getElementById('time-form');
+            form.elements['time'].value = parseInt(elapsedTime/1000);
+            form.submit();
+        })
 //////////////////////////////////////////////////////////        
 
 //バックグラウンド処理を行わないようにする//////////////////

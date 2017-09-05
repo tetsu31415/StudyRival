@@ -7,3 +7,4 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Record
         fields = ('time',)
+        widgets = {'time': forms.HiddenInput()}
