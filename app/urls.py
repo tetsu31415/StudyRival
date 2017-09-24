@@ -16,6 +16,7 @@ urlpatterns = [
         },
         name='logout'),
 
+    url(r'^ranking/$', views.ranking, name='ranking'),
     url(r'', include('social_django.urls', namespace = 'social')),
     url(r'', views.stop_watch, name='stop_watch'),
 ]

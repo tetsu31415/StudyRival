@@ -8,4 +8,3 @@ class Record(models.Model):
     user = models.ForeignKey('auth.User')
     date = models.DateField(default=timezone.now)
     time = models.IntegerField()
-# Create your models here.
