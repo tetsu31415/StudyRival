@@ -48,7 +48,15 @@ def ranking(request):
             friends_ids.append(friend_id)
  
         data = User.objects.filter(Q(social_auth__uid__in=friends_ids)| Q(id=request.user.id)).values('first_name').annotate(times=Sum('record__time')).order_by('-times')
+        for i in range(len(data)):
+            data[i]['times'] = time_format(data[i]['times'])
         return render(request, 'app/ranking.html', {'data': data})
     except:
         msg = "フォロー情報の取得に失敗しました"
         return render(request, 'app/ranking.html', {'error': msg,}) 
+ 
+def time_format(time):
+    h = time//3600
+    m = time//60%60
+    s = time%60
+    return "%02d:%02d:%02d" % (h, m, s)
