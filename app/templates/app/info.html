@@ -1,0 +1,28 @@
+{% extends "testapp/base.html" %}
+{% block content %}
+  <div class="m-t-1 m-l-1 m-r-1">
+
+      <div class="container">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a href="" class="nav-link navbar-default active">プロフィール</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'testapp:ranking' %}" class="nav-link navbar-default" >ランキング</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'testapp:time' %}" class="nav-link navbar-default">記録</a>
+          </li>
+        </ul>
+
+
+        <!--タブのコンテンツ部分-->
+
+            　<!--プロフィールタブ-->
+              <div id="profile" class="tab-pane active">
+                <p>プロフィール</p>
+              </div>
+      </div>
+
+  </div>
+{% endblock %}

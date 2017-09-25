@@ -1,0 +1,30 @@
+{% extends "easy_regist/base.html" %}
+{% block content %}
+<div class="container">
+  <div class="center">
+    <h1>ユーザ情報</h1>
+    <p class="lead">ログイン中のユーザデータを表示します</p>
+  </div>
+ 
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>名前・説明</th>
+        <th>ログインユーザのデータ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ユーザ名</td>
+        <td>{{ user.username }}</td>
+      </tr>
+      <tr>
+        <td>名前</td>
+        <td>{{ user.first_name }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'easy_regist:user_update' user.pk %}" class="btn btn-outline-primary">ユーザ情報の変更</a>
+ 
+</div><!-- /.container -->
+{% endblock %}

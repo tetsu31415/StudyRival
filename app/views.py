@@ -12,11 +12,10 @@ from django.conf import settings
 
 import tweepy
 
-
 def login_form(request):
     return render(request, 'app/login.html', {})
 
-def stop_watch(request):
+def timer(request):
     if request.method=="POST":
         form = PostForm(request.POST)
         if form.is_valid():
@@ -25,7 +24,7 @@ def stop_watch(request):
             post.save()
     form = PostForm() 
     records = Record.objects.all()
-    return render(request, 'app/stop_watch.html' , {'records': records, 'form': form, })
+    return render(request, 'app/timer.html' , {'records': records, 'form': form, })
 
 def ranking(request):
     # 各種キーをセット

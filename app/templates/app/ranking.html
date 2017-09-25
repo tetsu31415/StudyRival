@@ -1,59 +1,43 @@
-<!DOCTYPE html>
-<html lang='ja'>
-    <head>
-      <title>ranking</title>
-      <meta charset="utf-8">
-  <style>
-    body {
-        background: #e0e0e0;
-        font-family: Arial, sans-serif;
-        text-align: center;
-    }
-    #timerText {
-        color: #00aaff;
-        font-size: 128px;
-        margin: 40px auto;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-    .btn {
-        display: inline-block;
-        width: 100px;
-        padding: 7px;
-        border-radius: 5px;
-        box-shadow: 0 4px 0 #0088cc;
-        color: #fff;
-        background: #00aaff;
-        cursor: pointer;
-    }
-    .btn + .btn {
-        margin-left: 10px;
-    }
-    .btn.active {
-        opacity: 1.0;
-    }
-    .btn.inactive {
-        opacity: 0.5;
-    }
-    table{
-        margin-top: 20px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-  </style>
-    </head>
-    <body>
-        <h2>ランキング</h2>
-        <table>
-        <tr><td>順位</td><td>名前</td><td>総勉強時間</td></tr>
-        {% for d in data %}
-        <tr>
-        <td> {{ forloop.counter }} </td>
-        <td> {{ d.username  }} </td>
-        <td> {{ d.times  }} </td>
-        </tr>
-        {% endfor %}
-        </table>
+{% extends "app/base.html" %}
+{% block content %}
+  <div class="m-t-1 m-l-1 m-r-1">
+    <!--タブのボタン部分-->
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="{% url 'easy_regist:mypage' %}" class="nav-link navbar-default" >プロフィール</a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link navbar-default active" >ランキング</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'timer' %}" class="nav-link navbar-default" >記録</a>
+        </li>
+      </ul>
 
-    </body>
-</html>
 
+      <!--タブのコンテンツ部分-->
+        <div id=content>
+          <table class="table">
+              <thead class="thead-inverse">
+                <tr>
+                  <th>順位</th>
+                  <th>名前</th>
+                  <th>総勉強時間</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for d in data %}
+                <tr>
+                  <td> {{ forloop.counter }} </td>
+                  <td> {{ d.username  }} </td>
+                  <td> {{ d.times  }} </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+                  
+        </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "app/base.html" %}
+{% block content %}
+<div class="container">
+  <div class="center">
+    <h1>ログインページ</h1>
+  </div>
+ 
+  <div class="card-group">
+    <div class="card card-outline-primary">
+      <div class="card-block">
+	    {% csrf_token %}
+            <button type="button"  class="btn btn-lg btn-block btn-outline-primary" onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterでログイン</button>
+	    </form>
+      </div>
+    </div>
+    <div class="card card-outline-primary">
+      <div class="card-block">
+        <a class="btn btn-lg btn-block btn-outline-primary" href="https://twitter.com/signup?lang=ja">
+          Twitterアカウント登録
+        </a>
+      </div>
+    </div>
+ 
+  </div> <!-- /.card-group -->
+　　
+</div> <!-- /.container -->
+{% endblock %}

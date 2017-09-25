@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
     'social_django',
+    'easy_regist', 
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'myoauth.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,7 +133,7 @@ SOCIAL_AUTH_TWITTER_SECRET = 't9p15i7A3PQp8i6eESBOh4cO17EmXRIzl3HAVMA1Nwh8gaYedG
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/stop_watch/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
 import dj_database_url
@@ -142,7 +143,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ALLOWED_HOSTS = ['*']
 
-STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    )
+
+#STATIC_ROOT = 'staticfiles'
 
 DEBUG = False
 

@@ -1,0 +1,112 @@
+{% extends "app/base.html" %}
+{% block content %}
+  <div class="m-t-1 m-l-1 m-r-1">
+    <!--タブのボタン部分-->
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="{% url 'easy_regist:mypage' %}" class="nav-link navbar-default">プロフィール</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'ranking' %}" class="nav-link navbar-default" >ランキング</a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link navbar-default active">記録</a>
+        </li>
+      </ul>
+
+
+      <div id="content" class="tab-pane">
+                <div id="timerText">0.00</div>
+                <div id="start" class="btn active">START</div>
+                <div id="stop" class="btn inactive">STOP</div>
+                <div id="reset" class="btn active">RESET</div>
+                <div id="save" class="btn inactive">SAVE</div>
+                <form method="POST" class="post-form" id="time-form">{% csrf_token %}
+                    {{ form.as_p }}
+                </form>
+
+            <script>
+            (function() {
+                'use strict';
+
+                var startTime;
+                var timerId;
+                var elapsedTime = 0;
+                var isRunning = false;
+
+                var startButton = document.getElementById('start');
+                var stopButton = document.getElementById('stop');
+                var resetButton = document.getElementById('reset');
+                var saveButton = document.getElementById('save');
+                var timerText = document.getElementById('timerText');
+        //関数の定義////////////////////////////////////////////////
+                function setButtonState(start, stop, reset) {
+                    startButton.className = start ? 'btn active' : 'btn inactive';
+                    stopButton.className = stop ? 'btn active' : 'btn inactive';
+                    resetButton.className = reset ? 'btn active' : 'btn inactive';
+                    saveButton.className = reset ? 'btn active' : 'btn inactive';
+                }
+
+                function start_func(){
+                    if (isRunning) return;
+                    isRunning = true;
+                    startTime = Date.now(); // 1970/1/1 00:00:00からの経過ミリ秒
+                    updateTimerText();
+                    setButtonState(false, true, false);
+                }
+
+                function stop_func(){
+                    if (!isRunning) return;
+                    isRunning = false;
+                    elapsedTime += Date.now() - startTime;
+                    clearTimeout(timerId);
+                    setButtonState(true, false, true);
+                }
+
+                function updateTimerText() {
+                    timerId = setTimeout(function() {
+                        var t = Date.now() - startTime + elapsedTime;
+                        timerText.innerHTML = (t / 1000).toFixed(2);
+                        updateTimerText();
+                    }, 10);
+                }
+
+        ////////////////////////////////////////////////////////////
+
+        //ボタンを押した時の処理//////////////////////////////////////
+                setButtonState(true, false, false);
+
+                startButton.addEventListener('click', start_func);
+
+                stopButton.addEventListener('click', stop_func);
+
+                resetButton.addEventListener('click', function() {
+                    if (isRunning) return;
+                    timerText.innerHTML = '0.00';
+                    elapsedTime = 0;
+                    setButtonState(true, false, false);
+                });
+                 saveButton.addEventListener('click', function() {
+                    if(isRunning || elapsedTime==0) return;
+                    var form = document.getElementById('time-form');
+                    form.elements['time'].value = parseInt(elapsedTime/1000);
+                    form.submit();
+                })
+        //////////////////////////////////////////////////////////
+
+        //バックグラウンド処理を行わないようにする//////////////////
+                document.addEventListener("visibilitychange",function(e){
+                if(document.hidden){
+                    stop_func();
+                }else{
+                    start_func();
+                }});
+        /////////////////////////////////////////////////////////////
+            })();
+            </script>
+          </div>
+          <!--ストップウォッチここまで-->
+    </div>
+  </div>
+{% endblock %}

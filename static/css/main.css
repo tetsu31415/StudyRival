@@ -1,0 +1,125 @@
+.center {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.errorlist li {
+  list-style-type: none;
+}
+
+.errorlist {
+  color: red;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+body {
+    background: #44aeea;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+#timerText {
+    color: #00aaff;
+    font-size: 128px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.btn {
+    display: inline-block;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 5px;
+    box-shadow: 0 4px 0 #88b83e;
+    color: #fff;
+    background: #b3ce5b;
+    cursor: pointer;
+}
+.btn + .btn {
+    margin-left: 10px;
+}
+.btn.active {
+    opacity: 1.0;
+}
+.btn.inactive {
+    opacity: 0.5;
+}
+table{
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* navbar 全体の背景色とボーダーカラー */
+.nav-tabs li {
+background-color: #2c4b79;
+border-color: #3e6962;
+}
+/* navbar テキストカラー */
+.nav-tabs li a {
+color: #fff;
+}
+
+/* navbar active設定時のカラー */
+.nav-tabs li .active　{
+color: #26534c;
+background-color: #428bca;
+}
+
+#content {
+  background-color: #e8f2fb;
+  padding: 30px;
+}
+
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Bold");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Helvetica Neue";
+  src: local("Helvetica Neue Regular");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Helvetica Neue";
+  src: local("Helvetica Neue Regular");
+  font-weight: 200;
+}
+
+body,
+tooltip,
+popover {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
+}
+
+@media all and (-ms-high-contrast: none) {
+  body,
+  tooltip,
+  popover {
+    font-family: Verdana, Meiryo, sans-serif;
+  }
+}
