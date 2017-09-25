@@ -10,13 +10,10 @@ from .forms import UpdateForm
 class TopPageView(generic.TemplateView):
     template_name = "easy_regist/index.html"
  
-class MyPageView(LoginRequiredMixin, generic.TemplateView):
-    template_name = "easy_regist/info.html"
- 
 class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = UpdateForm
-    success_url = reverse_lazy('easy_regist:mypage')
+    success_url = reverse_lazy('mypage')
     template_name = "easy_regist/user_update.html"
  
 def logout(request):

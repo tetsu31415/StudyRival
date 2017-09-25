@@ -22,7 +22,7 @@
           
           {% if user.is_authenticated %}
           <div class="pull-sm-right">
-            <a class="nav-item nav-link" href="{% url 'easy_regist:mypage' %}">
+            <a class="nav-item nav-link" href="{% url 'mypage' %}">
               ようこそ、{{ user.username }}！マイページへ
             </a>
             <a class="nav-item nav-link" href="{% url 'easy_regist:logout' %}">ログアウト</a>

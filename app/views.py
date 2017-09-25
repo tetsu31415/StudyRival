@@ -26,6 +26,9 @@ def timer(request):
     records = Record.objects.all()
     return render(request, 'app/timer.html' , {'records': records, 'form': form, })
 
+def mypage(request):
+    return render(request, 'app/info.html' , {})
+
 def ranking(request):
     # 各種キーをセット
     consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY

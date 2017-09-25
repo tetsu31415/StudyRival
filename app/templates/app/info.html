@@ -1,28 +1,49 @@
-{% extends "testapp/base.html" %}
+{% extends "app/base.html" %}
 {% block content %}
   <div class="m-t-1 m-l-1 m-r-1">
+    <!--タブのボタン部分-->
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="" class="nav-link navbar-default active" >プロフィール</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'ranking' %}" class="nav-link navbar-default" >ランキング</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'timer' %}" class="nav-link navbar-default" >記録</a>
+        </li>
+      </ul>
 
-      <div class="container">
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a href="" class="nav-link navbar-default active">プロフィール</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'testapp:ranking' %}" class="nav-link navbar-default" >ランキング</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'testapp:time' %}" class="nav-link navbar-default">記録</a>
-          </li>
-        </ul>
 
-
-        <!--タブのコンテンツ部分-->
-
-            　<!--プロフィールタブ-->
-              <div id="profile" class="tab-pane active">
-                <p>プロフィール</p>
-              </div>
-      </div>
-
+      <!--タブのコンテンツ部分-->
+        <div id=content>
+        
+          <div class="center">
+            <h1>ユーザ情報</h1>
+            <p class="lead">ログイン中のユーザデータを表示します</p>
+          </div>
+         
+          <table class="table">
+            <thead class="thead-inverse">
+              <tr>
+                <th>名前・説明</th>
+                <th>ログインユーザのデータ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ユーザ名</td>
+                <td>{{ user.username }}</td>
+              </tr>
+              <tr>
+                <td>名前</td>
+                <td>{{ user.first_name }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="{% url 'easy_regist:user_update' user.pk %}" class="btn btn-outline-primary">ユーザ情報の変更</a>
+        </div>
+    </div>
   </div>
 {% endblock %}
