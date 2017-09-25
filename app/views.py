@@ -43,9 +43,12 @@ def ranking(request):
     # フォローした人のIDを全取得
  
     # Cursor使うとすべて取ってきてくれるが，配列ではなくなるので配列に入れる
-    for friend_id in tweepy.Cursor(api.friends_ids, user_id=my_info.id).items():
-        friends_ids.append(friend_id)
+    try:
+        for friend_id in tweepy.Cursor(api.friends_ids, user_id=my_info.id).items():
+            friends_ids.append(friend_id)
  
-    data = User.objects.filter(Q(social_auth__uid__in=friends_ids)| Q(id=request.user.id)).values('first_name').annotate(times=Sum('record__time')).order_by('-times')
-    return render(request, 'app/ranking.html', {'data': data})
-
+        data = User.objects.filter(Q(social_auth__uid__in=friends_ids)| Q(id=request.user.id)).values('first_name').annotate(times=Sum('record__time')).order_by('-times')
+        return render(request, 'app/ranking.html', {'data': data})
+    except:
+        msg = "フォロー情報の取得に失敗しました"
+        return render(request, 'app/ranking.html', {'error': msg,}) 

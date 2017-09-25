@@ -18,6 +18,7 @@
 
       <!--タブのコンテンツ部分-->
         <div id=content>
+          {% if data  %}
           <table class="table">
               <thead class="thead-inverse">
                 <tr>
@@ -36,7 +37,11 @@
               {% endfor %}
               </tbody>
             </table>
-                  
+         {% endif %}
+
+        {% if error %}
+          {{ error }}
+        {% endif %}
         </div>
     </div>
   </div>
