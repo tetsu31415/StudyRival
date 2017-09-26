@@ -97,11 +97,11 @@
         var zp = function(x){
             return (x<10)?("0"+x):x
         };
-        var hour = Math.floor(time/3600000);
-        var minute = Math.floor(time/60000) % 60;
-        var sec  = Math.floor(time/1000)%60;
-        var msec  = Math.floor(time%1000/10);
-        return [zp(hour), zp(minute), zp(sec), zp(msec)].join(':'); 
+        var hr = Math.floor(time/3600000);
+        var min = Math.floor(time/60000) % 60;
+        var sec = Math.floor(time/1000)%60;
+        var ms = Math.floor(time%1000/10);
+        return zp(hr)+':'+zp(min)+':'+zp(sec)+'.'+zp(ms); 
     }
 
 })();
