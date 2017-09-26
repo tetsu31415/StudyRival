@@ -26,8 +26,7 @@ def timer(request):
             post.save()
             return redirect("mypage")
     form = PostForm() 
-    records = Record.objects.all()
-    return render(request, 'app/timer.html' , {'records': records, 'form': form, })
+    return render(request, 'app/timer.html' , {'form': form, })
 
 def mypage(request):
     q = User.objects.filter(id=request.user.id).annotate(times=Sum('record__time'))
