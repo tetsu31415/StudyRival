@@ -33,6 +33,7 @@
                 var timerId;
                 var elapsedTime = 0;
                 var isRunning = false;
+                var isSleeping = false
 
                 var startButton = document.getElementById('start');
                 var stopButton = document.getElementById('stop');
@@ -91,9 +92,15 @@
         //バックグラウンド処理を行わないようにする//////////////////
                 document.addEventListener("visibilitychange",function(e){
                 if(document.hidden){
-                    stop_func();
+                    if(isRunning){
+                        isSleeping = true;
+                        stop_func();
+                    }
                 }else{
-                    start_func();
+                    if(isSleeping){
+                        isSleeping = false;
+                        start_func();
+                    }
                 }});
         /////////////////////////////////////////////////////////////
             })();
