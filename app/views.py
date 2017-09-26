@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
@@ -11,6 +11,7 @@ from .forms import PostForm
 from django.conf import settings
 
 import tweepy
+import math
 
 def login_form(request):
     return render(request, 'app/login.html', {})
@@ -22,12 +23,18 @@ def timer(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
+            return redirect("mypage")
     form = PostForm() 
     records = Record.objects.all()
     return render(request, 'app/timer.html' , {'records': records, 'form': form, })
 
 def mypage(request):
-    return render(request, 'app/info.html' , {})
+    q = User.objects.filter(id=request.user.id).annotate(times=Sum('record__time'))
+    time = q[0].times
+    if not time:
+        time = 0
+    lv = int(math.sqrt(time/3600) + 1)
+    return render(request, 'app/info.html' , {'time': time_format(time), 'level': lv })
 
 def ranking(request):
     # 各種キーをセット
