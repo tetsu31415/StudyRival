@@ -67,6 +67,10 @@ color: #26534c;
 background-color: #428bca;
 }
 
+.nav-item.nav-link{
+  color: #fff;
+}
+
 #content {
   background-color: #e8f2fb;
   padding: 30px;
