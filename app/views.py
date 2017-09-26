@@ -66,6 +66,8 @@ def ranking(request):
         return render(request, 'app/ranking.html', {'error': msg,}) 
  
 def time_format(time):
+    if not time:
+        return "00:00:00"
     h = time//3600
     m = time//60%60
     s = time%60
