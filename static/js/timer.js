@@ -53,11 +53,11 @@
         form.elements['time'].value = parseInt(elapsedTime/1000);
         
         // ツイート画面を表示
-        $('#studyendtweet').val(time_format(elapsedTime) + " 勉強しました by Study Rival");
+        $('#studyend').find('[name=words]').val(time_format_ja(elapsedTime) + " 勉強しました by Study Rival");
         $('#studyend').modal('show');
         $('#studyend').on('hidden.bs.modal', function () {
-                document.getElementById('time-form').submit();
-        })
+            document.getElementById('time-form').submit();
+        });
     }
 
     function updateTimerText() {
@@ -80,8 +80,31 @@
     saveButton.addEventListener('click', save_func);
     
     $('.tweetform').submit(function(event) {
-        var form = $(event.target).first();
-        msg = form.find('[name=words]').val());
+        var form = $(event.target);
+        console.log(form);
+        var textbox = form.find('[name=words]');
+        var submitbutton = form.find('[type=submit]');
+        var csrftoken = form.find('[name=csrfmiddlewaretoken]').val();
+        var csrfSafeMethod = function (method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        submitbutton.addClass('inactive');
+        $.ajax({
+             'url': form.attr('action'),
+             'type': 'POST',
+             'dataType': 'json',
+             'data': {words: textbox.val(), 'csrfmiddlewaretoken': csrftoken},
+        }).then(function (data){
+                submitbutton.removeClass('inactive');
+                form.find('.modal-body').append($('<p>').text("ツイートしました！"));
+                form.find('.modal-body').append($('<p>').text("「"+ textbox.val() +"」"));
+                textbox.val('');
+            }, function (){
+                submitbutton.removeClass('inactive');
+                form.find('.modal-body').append("ツイートに失敗しました。");
+            }
+        );
         return false;
     });
     
@@ -110,6 +133,12 @@
         var sec = Math.floor(time/1000)%60;
         var ms = Math.floor(time%1000/10);
         return zp(hr)+':'+zp(min)+':'+zp(sec)+'.'+zp(ms); 
+    }
+
+    function time_format_ja(time){
+        var hr = Math.floor(time/3600000);
+        var min = Math.floor(time/60000) % 60;
+        return hr+'時間'+min+'分'; 
     }
 
 })();

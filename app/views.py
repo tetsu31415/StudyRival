@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from social_django.models import UserSocialAuth
 from django.db.models import Q, Sum
 
+from django.http import JsonResponse, HttpResponse
 from .forms import PostForm
 from django.conf import settings
 
@@ -43,6 +44,23 @@ def mypage(request):
         'require': time_format(require)
     }
     return render(request, 'app/info.html' , data)
+
+def tweet(request):
+    if request.is_ajax() and request.method == 'POST':
+        msg = request.POST.get('words')
+        consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY
+        consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET
+        access_token = UserSocialAuth.objects.get(user__id=request.user.id).access_token.get('oauth_token')
+        access_token_secret = UserSocialAuth.objects.get(user__id=request.user.id).access_token.get('oauth_token_secret')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        
+        try: 
+            api = tweepy.API(auth)
+            api.update_status(msg)
+        except tweepy.error.TweepError as e: 
+            return HttpResponse(status=500)
+        return JsonResponse({'msg': msg})
 
 def ranking(request):
     # 各種キーをセット
