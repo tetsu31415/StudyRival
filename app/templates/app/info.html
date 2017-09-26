@@ -22,7 +22,11 @@
             <h1>ユーザ情報</h1>
             <p class="lead">ログイン中のユーザデータを表示します</p>
           </div>
-         
+            
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress }}%" 
+            aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
           <table class="table">
             <thead class="thead-inverse">
               <tr>
@@ -46,6 +50,14 @@
               <tr>
                 <td>レベル</td>
                 <td>{{ level }}</td>
+              </tr>
+              <tr>
+                <td>進捗</td>
+                <td>{{ progress }}</td>
+              </tr>
+              <tr>
+                <td>次のレベルまで</td>
+                <td>{{ require }}</td>
               </tr>
             </tbody>
           </table>

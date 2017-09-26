@@ -33,8 +33,16 @@ def mypage(request):
     time = q[0].times
     if not time:
         time = 0
-    lv = int(math.sqrt(time/3600) + 1)
-    return render(request, 'app/info.html' , {'time': time_format(time), 'level': lv })
+    lv = level(time);
+    progress = int(100 * (time - level_req(lv))/(level_req(lv+1)-level_req(lv)))
+    require = level_req(lv+1) - time
+    data = {
+        'time': time_format(time),
+        'level': lv,
+        'progress': progress,
+        'require': time_format(require)
+    }
+    return render(request, 'app/info.html' , data)
 
 def ranking(request):
     # 各種キーをセット
@@ -64,7 +72,13 @@ def ranking(request):
     except:
         msg = "フォロー情報の取得に失敗しました"
         return render(request, 'app/ranking.html', {'error': msg,}) 
- 
+
+def level(time):
+    return int(math.sqrt(time/3600) + 1)
+
+def level_req(level):
+    return (level-1)**2 * 3600
+
 def time_format(time):
     if not time:
         return "00:00:00"
