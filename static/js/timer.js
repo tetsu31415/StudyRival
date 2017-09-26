@@ -78,6 +78,14 @@
     stopButton.addEventListener('click', pause_func);
 
     saveButton.addEventListener('click', save_func);
+    
+    $('.tweetform').submit(function(event) {
+        var form = $(event.target).first();
+        msg = form.find('[name=words]').val());
+        return false;
+    });
+    
+    
     //////////////////////////////////////////////////////////
 
     //バックグラウンド処理を行わないようにする//////////////////
