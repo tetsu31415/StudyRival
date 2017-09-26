@@ -20,7 +20,6 @@
                 <div id="timerText">0.00</div>
                 <div id="start" class="btn active">START</div>
                 <div id="stop" class="btn inactive">STOP</div>
-                <div id="reset" class="btn active">RESET</div>
                 <div id="save" class="btn inactive">SAVE</div>
                 <form method="POST" class="post-form" id="time-form">{% csrf_token %}
                     {{ form.as_p }}
@@ -37,15 +36,13 @@
 
                 var startButton = document.getElementById('start');
                 var stopButton = document.getElementById('stop');
-                var resetButton = document.getElementById('reset');
                 var saveButton = document.getElementById('save');
                 var timerText = document.getElementById('timerText');
         //関数の定義////////////////////////////////////////////////
-                function setButtonState(start, stop, reset) {
+                function setButtonState(start, stop, save) {
                     startButton.className = start ? 'btn active' : 'btn inactive';
                     stopButton.className = stop ? 'btn active' : 'btn inactive';
-                    resetButton.className = reset ? 'btn active' : 'btn inactive';
-                    saveButton.className = reset ? 'btn active' : 'btn inactive';
+                    saveButton.className = save ? 'btn active' : 'btn inactive';
                 }
 
                 function start_func(){
@@ -62,6 +59,13 @@
                     elapsedTime += Date.now() - startTime;
                     clearTimeout(timerId);
                     setButtonState(true, false, true);
+                }
+
+                function save_func(){
+                    if(isRunning || elapsedTime==0) return;
+                    var form = document.getElementById('time-form');
+                    form.elements['time'].value = parseInt(elapsedTime/1000);
+                    form.submit();
                 }
 
                 function updateTimerText() {
@@ -81,18 +85,7 @@
 
                 stopButton.addEventListener('click', stop_func);
 
-                resetButton.addEventListener('click', function() {
-                    if (isRunning) return;
-                    timerText.innerHTML = '0.00';
-                    elapsedTime = 0;
-                    setButtonState(true, false, false);
-                });
-                 saveButton.addEventListener('click', function() {
-                    if(isRunning || elapsedTime==0) return;
-                    var form = document.getElementById('time-form');
-                    form.elements['time'].value = parseInt(elapsedTime/1000);
-                    form.submit();
-                })
+                saveButton.addEventListener('click', save_func);
         //////////////////////////////////////////////////////////
 
         //バックグラウンド処理を行わないようにする//////////////////
