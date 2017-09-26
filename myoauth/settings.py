@@ -133,7 +133,7 @@ SOCIAL_AUTH_TWITTER_SECRET = 't9p15i7A3PQp8i6eESBOh4cO17EmXRIzl3HAVMA1Nwh8gaYedG
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/mypage/'
 LOGIN_URL = '/login/'
 
 import dj_database_url
