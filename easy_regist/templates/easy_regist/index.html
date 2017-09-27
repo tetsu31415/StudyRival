@@ -7,8 +7,11 @@
       <p class="lead">StudyRivalはあなたのモチベーションを維持を助けるアプリケーションです</p>
       <p>ランキングがどうのこうの</p>
     </div>
-
+    {% if user.is_authenticated %}
+    <p><a class="btn btn-lg btn-primary" href="{% url 'mypage' %}" role="button">マイページ</a></p>
+    {% else %}
     <p><a class="btn btn-lg btn-primary" href="{% url 'easy_regist:login' %}" role="button">ログイン</a></p>
+    {% endif %}
   </div>
 </div><!-- /.container -->
 {% endblock %}
