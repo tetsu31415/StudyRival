@@ -47,6 +47,10 @@
                   <h3>勉強時間の推移(最近一週間)</h3>
                 </div>
                   <div class = "chart-container">
+                    <script>
+                        var array_time = [ {% for w in weektime %}  '{{w}}', {% endfor %} ];
+                        var array_day = [ {% for w in weekdate %}  '{{w|date:'m/d'}}' , {% endfor %} ];
+                    </script>
                     <canvas id="mychart"></canvas>
                   </div>
               </div>

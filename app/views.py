@@ -13,6 +13,7 @@ from django.conf import settings
 
 import tweepy
 import math
+import datetime
 
 def login_form(request):
     return render(request, 'app/login.html', {})
@@ -36,6 +37,19 @@ def mypage(request):
     progress = int(100 * (time - level_req(lv))/(level_req(lv+1)-level_req(lv)))
     require = level_req(lv+1) - time
     
+    # 直近一週間の勉強時間集計
+    startdate = datetime.date.today() - datetime.timedelta(6)
+    enddate = datetime.date.today()
+    q = Record.objects.filter(user__id=request.user.id, date__range=[startdate, enddate]).values('date').annotate(times=Sum('time')).order_by('date')
+    weektime = [0 for i in range(7)]
+    weekdate = [(startdate + datetime.timedelta(i)) for i in range(7)]
+    i = 0
+    for r in q:
+        while r['date'] != startdate:
+            i += 1
+            startdate += datetime.timedelta(1)
+        weektime[i] = "%.2f" % (r['times']/3600)
+
     auth = twitter_oauth(request.user.id);
     # tweepy初期化
     api = tweepy.API(auth)
@@ -48,11 +62,14 @@ def mypage(request):
     
     data = {
         'time': time_format(time),
+        'weektime': weektime,
+        'weekdate': weekdate,
         'level': lv,
         'progress': progress,
         'require': time_format(require),
         'me': me,
     }
+    print (weektime)
     return render(request, 'app/info.html' , data)
 
 def tweet(request):
