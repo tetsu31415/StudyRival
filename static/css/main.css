@@ -131,3 +131,8 @@ popover {
     font-family: Verdana, Meiryo, sans-serif;
   }
 }
+
+canvas {
+    width: 30%;
+    height: auto;
+}

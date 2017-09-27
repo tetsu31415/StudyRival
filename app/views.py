@@ -35,11 +35,23 @@ def mypage(request):
     lv = level(time);
     progress = int(100 * (time - level_req(lv))/(level_req(lv+1)-level_req(lv)))
     require = level_req(lv+1) - time
+    
+    auth = twitter_oauth(request.user.id);
+    # tweepy初期化
+    api = tweepy.API(auth)
+    
+    try:
+        me = api.me()
+        me.profile_image_url = me.profile_image_url.replace('_normal', '_bigger')
+    except:
+        me = None
+    
     data = {
         'time': time_format(time),
         'level': lv,
         'progress': progress,
-        'require': time_format(require)
+        'require': time_format(require),
+        'me': me,
     }
     return render(request, 'app/info.html' , data)
 
