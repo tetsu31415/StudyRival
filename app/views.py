@@ -46,13 +46,7 @@ def mypage(request):
 def tweet(request):
     if request.is_ajax() and request.method == 'POST':
         msg = request.POST.get('words')
-        consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY
-        consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET
-        access_token = UserSocialAuth.objects.get(user__id=request.user.id).access_token.get('oauth_token')
-        access_token_secret = UserSocialAuth.objects.get(user__id=request.user.id).access_token.get('oauth_token_secret')
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-        auth.set_access_token(access_token, access_token_secret)
-        
+        auth = twitter_oauth(request.user.id)
         try: 
             api = tweepy.API(auth)
             api.update_status(msg)
@@ -63,14 +57,7 @@ def tweet(request):
         return HttpResponse(status=405)
 
 def ranking(request):
-    # 各種キーをセット
-    consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY
-    consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET
-    access_token = UserSocialAuth.objects.get(user__id=request.user.id).access_token.get('oauth_token')
-    access_token_secret = UserSocialAuth.objects.get(user__id=request.user.id).access_token.get('oauth_token_secret')
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
- 
+    auth = twitter_oauth(request.user.id);
     # tweepy初期化
     api = tweepy.API(auth)
     my_info = api.me()
@@ -90,6 +77,16 @@ def ranking(request):
     except:
         msg = "フォロー情報の取得に失敗しました"
         return render(request, 'app/ranking.html', {'error': msg,}) 
+
+def twitter_oauth(user_id):
+    # 各種キーをセット
+    consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY
+    consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET
+    access_token = UserSocialAuth.objects.get(user__id=user_id).access_token.get('oauth_token')
+    access_token_secret = UserSocialAuth.objects.get(user__id=user_id).access_token.get('oauth_token_secret')
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    return auth
 
 def level(time):
     return int(math.sqrt(time/3600) + 1)
