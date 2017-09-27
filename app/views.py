@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
@@ -24,7 +24,6 @@ def timer(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            return redirect("mypage")
     form = PostForm() 
     return render(request, 'app/timer.html' , {'form': form, })
 
@@ -60,6 +59,8 @@ def tweet(request):
         except tweepy.error.TweepError as e: 
             return HttpResponse(status=500)
         return JsonResponse({'msg': msg})
+    else:
+        return HttpResponse(status=405)
 
 def ranking(request):
     # 各種キーをセット
