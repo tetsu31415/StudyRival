@@ -18,6 +18,7 @@ import datetime
 def login_form(request):
     return render(request, 'app/login.html', {})
 
+@login_required
 def timer(request):
     if request.method=="POST":
         form = PostForm(request.POST)
@@ -28,6 +29,7 @@ def timer(request):
     form = PostForm() 
     return render(request, 'app/timer.html' , {'form': form, })
 
+@login_required
 def mypage(request):
     q = User.objects.filter(id=request.user.id).annotate(times=Sum('record__time'))
     time = q[0].times
@@ -72,6 +74,7 @@ def mypage(request):
     print (weektime)
     return render(request, 'app/info.html' , data)
 
+@login_required
 def tweet(request):
     if request.is_ajax() and request.method == 'POST':
         msg = request.POST.get('words')
@@ -85,6 +88,7 @@ def tweet(request):
     else:
         return HttpResponse(status=405)
 
+@login_required
 def ranking(request):
     auth = twitter_oauth(request.user.id);
     # tweepy初期化

@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^$', views.TopPageView.as_view(), name='index'),
  
     # マイページ機能
-    url(r'^user_update/(?P<pk>[0-9]+)/$',
+    url(r'^user_update/$',
         views.UserUpdateView.as_view(), name='user_update'),
     
     # ログイン、ログアウト
