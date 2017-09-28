@@ -18,7 +18,7 @@
 
       <!--タブのコンテンツ部分-->
         <div id="content">
-          {% if data  %}
+          {% if ranking_data  %}
           <table class="table">
               <thead class="thead-inverse">
                 <tr>
@@ -28,10 +28,10 @@
                 </tr>
               </thead>
               <tbody>
-              {% for d in data %}
+              {% for d in ranking_data %}
                 <tr>
                   <td> {{ forloop.counter }} </td>
-                  <td> {{ d.first_name  }} </td>
+                  <td> <img src = "{{ d.prof_img }}", width="35" height="35"> {{ d.first_name  }} </td>
                   <td> {{ d.times  }} </td>
                 </tr>
               {% endfor %}

@@ -103,10 +103,26 @@ def ranking(request):
         for friend_id in tweepy.Cursor(api.friends_ids, user_id=my_info.id).items():
             friends_ids.append(friend_id)
  
-        data = User.objects.filter(Q(social_auth__uid__in=friends_ids)| Q(id=request.user.id)).values('first_name').annotate(times=Sum('record__time')).order_by('-times')
+        data = User.objects.filter(Q(social_auth__uid__in=friends_ids)| Q(id=request.user.id)).values('first_name','social_auth__uid').annotate(times=Sum('record__time')).order_by('-times')
+
         for i in range(len(data)):
             data[i]['times'] = time_format(data[i]['times'])
-        return render(request, 'app/ranking.html', {'data': data})
+
+        ranking_ids = []
+
+        for i in range(len(data)):
+            ranking_ids.append(data[i]['social_auth__uid'])
+
+        ranking_data = []
+        ranking_data = list(data)
+        j=0
+
+        for i in range(0, len(ranking_ids), 100):
+            for user in api.lookup_users(user_ids=ranking_ids[i:i+100]):
+                ranking_data[j]["prof_img"] = user.profile_image_url_https
+                j+=1
+
+        return render(request, 'app/ranking.html', {'ranking_data': ranking_data})
     except:
         msg = "フォロー情報の取得に失敗しました"
         return render(request, 'app/ranking.html', {'error': msg,}) 
