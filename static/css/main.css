@@ -20,7 +20,8 @@ body {
 }
 #timerText {
     color: #00aaff;
-    font-size: 128px;
+    font-size: 8vmax;
+    font-family: sans-serif;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 .btn {
@@ -32,6 +33,7 @@ body {
     color: #fff;
     background: #b3ce5b;
     cursor: pointer;
+    margin: 5px;
 }
 .btn + .btn {
     margin-left: 10px;
