@@ -96,13 +96,15 @@
              'dataType': 'json',
              'data': {words: textbox.val(), 'csrfmiddlewaretoken': csrftoken},
         }).then(function (data){
-                submitbutton.removeClass('inactive');
-                form.find('.modal-body').append($('<p>').text("ツイートしました！"));
-                form.find('.modal-body').append($('<p>').text("「"+ textbox.val() +"」"));
-                textbox.val('');
+                textbox.remove();
+                submitbutton.remove();
+                form.find('.twitter-icon').attr('src', data['icon']);
+                form.find('.twitter-text').text(data['msg']);
+                form.find('div.row').show();
+                form.find('.modal-title').text("ツイートしました！");
             }, function (){
                 submitbutton.removeClass('inactive');
-                form.find('.modal-body').append("ツイートに失敗しました。");
+                form.find('.modal-body').append($('<p>').text("ツイートに失敗しました。"));
             }
         );
         return false;
