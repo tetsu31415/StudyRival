@@ -81,10 +81,12 @@ def tweet(request):
         auth = twitter_oauth(request.user.id)
         try: 
             api = tweepy.API(auth)
-            api.update_status(msg)
+            status = api.update_status(msg)
         except tweepy.error.TweepError as e: 
             return HttpResponse(status=500)
-        return JsonResponse({'msg': msg})
+        msg = status.text
+        icon = status.user.profile_image_url
+        return JsonResponse({'msg': msg, 'icon': icon, })
     else:
         return HttpResponse(status=405)
 

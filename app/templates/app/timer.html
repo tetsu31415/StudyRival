@@ -43,6 +43,10 @@
               </div>
               <div class="modal-body">
                 <input type="text" size="35" name="words" class="form-control" placeholder="ツイート" value="今から勉強を始めます！ by Study Rival"> 
+                <div class="row" style="display: none;">
+                  <div class="col-sm-3 twitter-icon"><img class="twitter-icon"/></div>
+                  <div class="col-sm-9 text-left twitter-text"></div>
+                </div>
               </div>
               <div class="modal-footer">
               {% csrf_token %}
@@ -68,6 +72,10 @@
               </div>
               <div class="modal-body">
                 <input id="stadyendtweet" type="text" size="35" name="words" class="form-control" placeholder="ツイート" value="勉強しました！by Study Rival"> 
+                <div class="row" style="display: none;">
+                  <div class="col-sm-3 twitter-icon"></div>
+                  <div class="col-sm-9 text-left twitter-text"></div>
+                </div>
               </div>
               <div class="modal-footer">
               {% csrf_token %}
