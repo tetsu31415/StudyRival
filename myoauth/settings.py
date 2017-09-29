@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '41utjp@o!u+#%^a3apwyi@v7ikn-b5lyebk4p4g204-b*65-r3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -124,11 +124,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-SOCIAL_AUTH_TWITTER_KEY = 'pG21jS3tYMItYKE1ZzHj5rIhe'
-SOCIAL_AUTH_TWITTER_SECRET = 't9p15i7A3PQp8i6eESBOh4cO17EmXRIzl3HAVMA1Nwh8gaYedG'
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -150,6 +145,11 @@ STATICFILES_DIRS = (
 STATIC_ROOT = 'staticfiles'
 
 DEBUG = False
+
+# 環境変数からキーを取得
+SOCIAL_AUTH_TWITTER_KEY = os.getenv("TWITTER_KEY", None)
+SOCIAL_AUTH_TWITTER_SECRET = os.getenv("TWITTER_SECRET", None)
+SECRET_KEY = os.getenv("SECRET_KEY", SECRET_KEY)
 
 try:
     from .local_settings import *
