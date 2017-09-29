@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import user_passes_test
 from .models import Record
 from django.contrib.auth.models import User
 from social_django.models import UserSocialAuth
-from django.db.models import Q, Sum
+from django.db.models import Sum
 
 from django.http import JsonResponse, HttpResponse
 from .forms import PostForm
@@ -52,7 +52,7 @@ def mypage(request):
             startdate += datetime.timedelta(1)
         weektime[i] = "%.2f" % (r['times']/3600)
 
-    auth = twitter_oauth(request.user.id);
+    auth = twitter_oauth(request.user.id)
     # tweepy初期化
     api = tweepy.API(auth)
     
@@ -71,7 +71,6 @@ def mypage(request):
         'require': time_format(require),
         'me': me,
     }
-    print (weektime)
     return render(request, 'app/info.html' , data)
 
 @login_required
@@ -92,30 +91,28 @@ def tweet(request):
 
 @login_required
 def ranking(request):
-    auth = twitter_oauth(request.user.id);
+    auth = twitter_oauth(request.user.id)
     # tweepy初期化
     api = tweepy.API(auth)
-    my_info = api.me()
+    
+    my_uid = UserSocialAuth.objects.get(user__id=request.user.id).uid
  
-    friends_ids = []
+    friends_ids = [my_uid]
     # フォローした人のIDを全取得
  
     # Cursor使うとすべて取ってきてくれるが，配列ではなくなるので配列に入れる
     try:
-        for friend_id in tweepy.Cursor(api.friends_ids, user_id=my_info.id).items():
+        for friend_id in tweepy.Cursor(api.friends_ids, user_id=my_uid).items():
             friends_ids.append(friend_id)
  
-        data = User.objects.filter(Q(social_auth__uid__in=friends_ids)| Q(id=request.user.id)).values('first_name','social_auth__uid').annotate(times=Sum('record__time')).order_by('-times')
-
-        for i in range(len(data)):
-            data[i]['times'] = time_format(data[i]['times'])
+        data = User.objects.filter(social_auth__uid__in=friends_ids).values('first_name','social_auth__uid').annotate(times=Sum('record__time')).order_by('-times')
 
         ranking_ids = []
 
         for i in range(len(data)):
+            data[i]['times'] = time_format(data[i]['times'])
             ranking_ids.append(data[i]['social_auth__uid'])
 
-        ranking_data = []
         ranking_data = list(data)
         j=0
 
