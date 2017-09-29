@@ -4,8 +4,15 @@
   <div class="jumbotron m-3">
     <div class="left">
       <h1 class="text-primary">StudyRival</h1>
-      <p class="lead">StudyRivalはあなたのモチベーションを維持を助けるアプリケーションです</p>
-      <p>ランキングがどうのこうの</p>
+      <p class="lead">StudyRivalはあなたのモチベーション維持を助けるアプリケーションです</p>
+      <p>StudyRivalはこんな人にオススメ！</p>
+      <ul>
+        <li>友達と勉強時間を競いたい人</li>
+        <li>友達の勉強時間が気になってしょうがない人</li>
+        <li>勉強は質より量だと思っている人</li>
+      </ul>
+      <p>ランキング機能により、Twitterでフォローしている友達と勉強時間の競争ができます！</p>
+      <p>さらに！勉強すればするほどあなたのプレイヤーレベルもUP！！</p>
     </div>
     {% if user.is_authenticated %}
     <p><a class="btn btn-lg btn-primary" href="{% url 'mypage' %}" role="button">マイページ</a></p>
