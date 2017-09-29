@@ -66,13 +66,13 @@ SOCIAL_AUTH_TWITTER_SECRET = 'ツイッターのAPI Secret'
 DEBUG = True
 ```
 
-7. データベースのマイグレーション
+7. データベースのマイグレーション  
 ``
 (myvenv) $ python3 manage.py migrate
 ``
 
 ### テストサーバの起動
-1. サーバの起動
+1. サーバの起動  
 ``
 (myvenv) $ python3 manage.py runserver
 ``
