@@ -1,6 +1,7 @@
 myvenv
 db.sqlite3
-.DS_Store
+staticfiles
+local_settings.py
 
 *.egg-info
 *.pot
@@ -18,3 +19,4 @@ build/
 tests/report/
 
 *.swp
+.DS_Store
