@@ -1,1 +1,1 @@
-web: gunicorn myoauth.wsgi
+web: gunicorn studyrival.wsgi
