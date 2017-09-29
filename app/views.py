@@ -58,7 +58,7 @@ def mypage(request):
     
     try:
         me = api.me()
-        me.profile_image_url = me.profile_image_url.replace('_normal', '_bigger')
+        me.profile_image_url = me.profile_image_url_https.replace('_normal', '_bigger')
     except:
         me = None
     
@@ -85,7 +85,7 @@ def tweet(request):
         except tweepy.error.TweepError as e: 
             return HttpResponse(status=500)
         msg = status.text
-        icon = status.user.profile_image_url
+        icon = status.user.profile_image_url_https
         return JsonResponse({'msg': msg, 'icon': icon, })
     else:
         return HttpResponse(status=405)
