@@ -140,7 +140,8 @@
     function time_format_ja(time){
         var hr = Math.floor(time/3600000);
         var min = Math.floor(time/60000) % 60;
-        return hr+'時間'+min+'分'; 
+        var sec = Math.floor(time/1000)%60;
+        return hr+'時間'+min+'分'+sec+'秒'; 
     }
 
 })();
