@@ -105,7 +105,7 @@ def ranking(request):
         for friend_id in tweepy.Cursor(api.friends_ids, user_id=my_uid).items():
             friends_ids.append(friend_id)
  
-        data = User.objects.filter(social_auth__uid__in=friends_ids).values('first_name','social_auth__uid').annotate(times=Sum('record__time')).order_by('-times')
+        data = User.objects.filter(social_auth__uid__in=friends_ids).values('first_name','social_auth__uid').annotate(times=Sum('record__time')).filter(times__isnull=False).order_by('-times')
 
         ranking_ids = []
 
